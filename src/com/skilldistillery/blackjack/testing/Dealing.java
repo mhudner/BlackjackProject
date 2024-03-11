@@ -1,52 +1,49 @@
 package com.skilldistillery.blackjack.testing;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Scanner;
 
 import com.skilldistillery.blackjack.abstractcards.Card;
 import com.skilldistillery.blackjack.abstractcards.Deck;
+import com.skilldistillery.blackjack.game.BlackjackHand;
 
 public class Dealing {
+
+	public Deck deck;
+	BlackjackHand dealerHand; // The dealer's hand.
+	BlackjackHand playerHand; // The user's hand.
 
 	public static void main(String[] args) {
 		Dealing d = new Dealing();
 		d.run();
+		d.printHandAndValue(null, 0);
 	}
 
-	private void run() {
-		Deck deck = new Deck();
+	public void run() {
+		// A deck of cards. A new deck for each game.
 
-		Scanner sc = new Scanner(System.in);
-		System.out.print("How many cards: ");
+		deck = new Deck();
+		dealerHand = new BlackjackHand();
+		playerHand = new BlackjackHand();
 
-		try {
-			int numCards = sc.nextInt();
-			if (numCards > 52) {
-				throw new InputMismatchException();
-			}
+		/* Shuffle the deck, then deal two cards to each player. */
 
-			List<Card> hand = new ArrayList<>(numCards);
-			int totalValue = 0;
-			for (int i = 0; i < numCards; i++) {
-				Card c = deck.dealCard();
-				totalValue += c.getValue();
-				hand.add(c);
-			}
-			printHandAndValue(hand, totalValue);
-		} catch (InputMismatchException e) {
-			System.out.println("That is not a valid number of cards.");
-		} finally {
-			sc.close();
-		}
+		deck.shuffle();
+		playerHand.addCard(deck.dealCard());
+		dealerHand.addCard(deck.dealCard());
+		playerHand.addCard(deck.dealCard());
+		dealerHand.addCard(deck.dealCard());
+
+		System.out.println(playerHand);
+		System.out.println(dealerHand);
+
 	}
 
-	private void printHandAndValue(List<Card> hand, int value) {
+	public void printHandAndValue(List<Card> hand, int value) {
 		for (Card card : hand) {
 			System.out.println(card);
 		}
 		System.out.println("Total value: " + value);
+		System.out.println(dealerHand);
 	}
 
 }

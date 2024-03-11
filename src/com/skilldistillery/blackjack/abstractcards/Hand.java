@@ -4,21 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Hand {
-	// hand has a collection of cards inside of it
 	protected List<Card> cardsInHand = new ArrayList<>();
 
-	public Hand() {
-		// TODO Auto-generated constructor stub
+	public void addCard(Card card) {
+		cardsInHand.add(card);
 	}
 
-	public void addCard() {
+////	public void clearHand(List<Card> cardsInHand) {
+//		ArrayList arrayList = new ArrayList();
+//		// cardsInHand.removeAll(cardsInHand);
+//		arrayList.clear();
+//	}
 
-	}
+//	public void removeAllCard(Card card) {
+//		cardsInHand.removeAll((Collection<?>) card);
+//	}
 
 	public void clear() {
-
+		cardsInHand.clear();
 	}
 
 	public abstract int getHandValue();
+
+	@Override
+	public String toString() {
+		return "Current Hand: " + cardsInHand;
+	}
 
 }
